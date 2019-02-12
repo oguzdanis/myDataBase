@@ -13,12 +13,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tvmarka,tvmodel;
-        tvmarka = (TextView)findViewById(R.id.tv_marka);
-        tvmodel = (TextView)findViewById(R.id.tv_model);
-
-
-
 //Veritabanini olusturma
 
         try {
@@ -27,11 +21,21 @@ public class MainActivity extends AppCompatActivity {
             database.execSQL("CREATE TABLE IF NOT EXISTS Arabalar (Marka VARCHAR,Model VARCHAR,Yil INT(4))");
 
             //INSERT INTO
-            //database.execSQL("INSERT INTO Arabalar (Marka,Model,Yil) Values ('Seat','Leon',2017)");
+            //database.execSQL("INSERT INTO Arabalar (Marka,Model,Yil) Values ('Vw','Scirocco',2016)");
 
-            //SELECT
-            Cursor cursor = database.rawQuery("SELECT * FROM Arabalar LIMIT 1",null);
+            //Delete
+            //database.execSQL("DELETE from Arabalar where Marka='Seat'");
 
+            //UPDATE
+            //database.execSQL("UPDATE Arabalar SET Model='Golf' WHERE Model='Scirocco'");
+
+            //SELECT *
+            Cursor cursor = database.rawQuery("SELECT * FROM Arabalar",null);
+
+            //Select yil=2017
+            //Cursor cursor = database.rawQuery("SELECT Marka FROM Arabalar WHERE Yil>2015 AND Model='Leon'",null);
+
+            //Cursor cursor = database.rawQuery("SELECT Marka FROM Arabalar WHERE Model LIKE '%e%' ",null);
             int MarkaIx = cursor.getColumnIndex("Marka");
             int ModelIx = cursor.getColumnIndex("Model");
 
@@ -40,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
             while (cursor!=null){
                 System.out.println("Marka :"+cursor.getString(MarkaIx));
                 System.out.println("Model :"+cursor.getString(ModelIx));
-                tvmarka.setText(cursor.getString(MarkaIx));
-                tvmodel.setText(cursor.getString(ModelIx));
                 cursor.moveToNext();
             }
 
